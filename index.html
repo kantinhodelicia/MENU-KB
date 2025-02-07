@@ -1,0 +1,717 @@
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kantinho Delícia Pizzaria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function MainComponent() {
+            const [selectedSize, setSelectedSize] = React.useState("FAMILIAR");
+            const [selectedMenu, setSelectedMenu] = React.useState("PIZZAS");
+            const [isZonesOpen, setIsZonesOpen] = React.useState(false);
+            const [isAdminLoginOpen, setIsAdminLoginOpen] = React.useState(false);
+            const [isAdminPanelOpen, setIsAdminPanelOpen] = React.useState(false);
+            const [adminPassword, setAdminPassword] = React.useState("");
+            const [adminError, setAdminError] = React.useState("");
+            const [adminActiveSection, setAdminActiveSection] = React.useState("pizzas");
+
+            const [pizzaMenu, setPizzaMenu] = React.useState([
+                {
+                    name: "MARGUERITA",
+                    desc: "Queijo mussarela, gouda, oregano e molho tomate",
+                    prices: { FAMILIAR: 750, MEDIO: 700, PEQ: 450 },
+                },
+                {
+                    name: "4 QUEIJOS",
+                    desc: "Queijo mussarela, queijo azul, edem e fogo e molho tomate",
+                    prices: { FAMILIAR: 900, MEDIO: 850, PEQ: 600 },
+                },
+                {
+                    name: "FIAMBRE",
+                    desc: "Fiambre, Queijo e molho tomate",
+                    prices: { FAMILIAR: 800, MEDIO: 750, PEQ: 500 },
+                },
+                {
+                    name: "FRANGO",
+                    desc: "Frango, queijo, molho tomate",
+                    prices: { FAMILIAR: 850, MEDIO: 800, PEQ: 550 },
+                },
+                {
+                    name: "CHOURIÇO",
+                    desc: "Chouriço Queijo e molho tomate",
+                    prices: { FAMILIAR: 800, MEDIO: 750, PEQ: 500 },
+                },
+                {
+                    name: "BACON",
+                    desc: "Bacon, queijo, molho tomate",
+                    prices: { FAMILIAR: 850, MEDIO: 800, PEQ: 550 },
+                },
+                {
+                    name: "PRESUNTO",
+                    desc: "Presunto, queijo, molho tomate",
+                    prices: { FAMILIAR: 850, MEDIO: 800, PEQ: 550 },
+                },
+                {
+                    name: "LINGUIÇA E QUEIJO DE TERRA",
+                    desc: "Linguiça, Queijo branco e molho tomate",
+                    prices: { FAMILIAR: 900, MEDIO: 850, PEQ: 600 },
+                },
+                {
+                    name: "CARNE MOIDA",
+                    desc: "Chouriço Queijo e molho tomate",
+                    prices: { FAMILIAR: 900, MEDIO: 850, PEQ: 600 },
+                },
+                {
+                    name: "ATUM",
+                    desc: "Atum, cebola, queijo, molho tomate",
+                    prices: { FAMILIAR: 800, MEDIO: 750, PEQ: 500 },
+                },
+                {
+                    name: "VEGETARIANO",
+                    desc: "Cebola,tomate,pimentão, cogumelo,queijo, molho tomate",
+                    prices: { FAMILIAR: 900, MEDIO: 850, PEQ: 600 },
+                },
+                {
+                    name: "ESPECIAL DA CASA",
+                    desc: "Bacon, cogumelo, nata, queijo, molho tomate",
+                    prices: { FAMILIAR: 900, MEDIO: 850, PEQ: 600 },
+                },
+                {
+                    name: "QUATRO ESTAÇÕES",
+                    desc: "Queijo e molho tomate cogumelo Fiambre Chouriço atum",
+                    prices: { FAMILIAR: 900, MEDIO: 850, PEQ: 600 },
+                },
+                {
+                    name: "TROPICAL",
+                    desc: "Frutas da época, queijo, molho tomate",
+                    prices: { FAMILIAR: 900, MEDIO: 850, PEQ: 600 },
+                },
+                {
+                    name: "MARISCO",
+                    desc: "Marisco, queijo, molho tomate",
+                    prices: { FAMILIAR: 1200, MEDIO: 1000 },
+                },
+                {
+                    name: "CAMARÃO",
+                    desc: "Camarão, queijo, molho tomate",
+                    prices: { FAMILIAR: 1200, MEDIO: 1000 },
+                },
+                {
+                    name: "MADÁ",
+                    desc: "Queijo, molho tomate, Chouriço, Bacon, Camarão e Ananás",
+                    prices: { FAMILIAR: 1400 },
+                },
+                {
+                    name: "CALZONE",
+                    desc: "Frango ou, Chouriço, Presunto, Cogumelo, Atum e Cebola (queijo e molho tomate)",
+                    prices: { FAMILIAR: 800 },
+                }
+            ]);
+
+            const [drinkMenu, setDrinkMenu] = React.useState([
+                {
+                    name: "ÁGUA",
+                    desc: "Água mineral",
+                    prices: { UN: 100 }
+                },
+                {
+                    name: "COCA-COLA",
+                    desc: "Refrigerante Coca-Cola",
+                    prices: { UN: 150 }
+                },
+                {
+                    name: "FANTA LARANJA",
+                    desc: "Refrigerante Fanta Laranja",
+                    prices: { UN: 150 }
+                },
+                {
+                    name: "CERVEJA",
+                    desc: "Cerveja local",
+                    prices: { UN: 200 }
+                },
+                {
+                    name: "SUMO NATURAL",
+                    desc: "Sumo natural da casa",
+                    prices: { UN: 200 }
+                },
+                {
+                    name: "VINHO TINTO",
+                    desc: "Vinho tinto da região",
+                    prices: { UN: 500 }
+                }
+            ]);
+
+            const [deliveryZones, setDeliveryZones] = React.useState([
+                { name: "Alto Glória", price: 200 },
+                { name: "Achada Santo António", price: 200 },
+                { name: "Achada São Filipe", price: 300 },
+                { name: "Achada Grande Frente", price: 300 },
+                { name: "Achada Grande Trás", price: 300 },
+                { name: "Achada Eugênio Lima", price: 300 },
+                { name: "Achada Limpo/Achada Mato", price: 300 },
+                { name: "Achadinha", price: 200 },
+                { name: "Achadinha Pires", price: 250 },
+                { name: "Bairro Craveiro Lopes", price: 200 },
+                { name: "Bela Vista", price: 150 },
+                { name: "Campus Unicv", price: 250 },
+                { name: "Cidadela", price: 200 },
+                { name: "Cova Minhoto", price: 250 },
+                { name: "Calabaceira", price: 250 },
+                { name: "Coqueiro", price: 250 },
+                { name: "Castelão", price: 250 },
+                { name: "Fazenda", price: 200 },
+                { name: "Zona Quelém", price: 150 },
+                { name: "Quebra Canela", price: 200 },
+                { name: "Fundo Cobom", price: 150 },
+                { name: "Terra Branca", price: 50 },
+                { name: "Tira Chapéu", price: 100 },
+                { name: "Lém Ferreira", price: 200 },
+                { name: "Monte Vermelho", price: 200 },
+                { name: "Ponta Água", price: 250 },
+                { name: "Pensamento", price: 250 },
+                { name: "Palmarejo", price: 250 },
+                { name: "Palmarejo Grande", price: 200 },
+                { name: "Praia Negra", price: 200 },
+                { name: "Plateau", price: 200 },
+                { name: "Prainha", price: 200 },
+                { name: "São Pedro Latada", price: 300 },
+                { name: "Safende", price: 250 },
+                { name: "Várzea", price: 150 },
+                { name: "Vila Nova", price: 250 }
+            ]);
+
+            const [customerProfiles, setCustomerProfiles] = React.useState([
+                {
+                    id: 1,
+                    name: "João Silva",
+                    phone: "9999999",
+                    email: "joao@example.com",
+                    address: "Rua Principal, Alto Glória",
+                    totalOrders: 5,
+                    lastOrder: "10/01/2024",
+                    preferences: ["Marguerita", "Coca-Cola"]
+                },
+                {
+                    id: 2,
+                    name: "Maria Santos",
+                    phone: "8888888",
+                    email: "maria@example.com", 
+                    address: "Achada Santo António",
+                    totalOrders: 3,
+                    lastOrder: "09/01/2024",
+                    preferences: ["4 Queijos", "Água"]
+                }
+            ]);
+
+            const ADMIN_PASSWORD = "B91edfbf46";
+
+            const handleAdminLogin = () => {
+                if (adminPassword === ADMIN_PASSWORD) {
+                    setIsAdminLoginOpen(false);
+                    setIsAdminPanelOpen(true);
+                    setAdminError("");
+                } else {
+                    setAdminError("Senha incorreta");
+                }
+            };
+
+            const renderAdminSection = () => {
+                switch(adminActiveSection) {
+                    case "pizzas":
+                        return (
+                            <div>
+                                <h3 className="text-2xl mb-4">Gerenciar Cardápio de Pizzas</h3>
+                                <div className="space-y-4">
+                                    {pizzaMenu.map((pizza, index) => (
+                                        <div key={index} className="flex justify-between items-center bg-gray-700 p-3 rounded">
+                                            <div>
+                                                <h4 className="font-bold">{pizza.name}</h4>
+                                                <p className="text-sm text-gray-300">{pizza.desc}</p>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <button className="bg-yellow-500 px-2 py-1 rounded">Editar</button>
+                                                <button className="bg-red-500 px-2 py-1 rounded">Remover</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <button className="bg-green-500 px-4 py-2 rounded w-full">
+                                        + Adicionar Nova Pizza
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    case "drinks":
+                        return (
+                            <div>
+                                <h3 className="text-2xl mb-4">Gerenciar Cardápio de Bebidas</h3>
+                                <div className="space-y-4">
+                                    {drinkMenu.map((drink, index) => (
+                                        <div key={index} className="flex justify-between items-center bg-gray-700 p-3 rounded">
+                                            <div>
+                                                <h4 className="font-bold">{drink.name}</h4>
+                                                <p className="text-sm text-gray-300">{drink.desc}</p>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <button className="bg-yellow-500 px-2 py-1 rounded">Editar</button>
+                                                <button className="bg-red-500 px-2 py-1 rounded">Remover</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <button className="bg-green-500 px-4 py-2 rounded w-full">
+                                        + Adicionar Nova Bebida
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    case "zones":
+                        return (
+                            <div>
+                                <h3 className="text-2xl mb-4">Gerenciar Zonas de Entrega</h3>
+                                <div className="space-y-4">
+                                    {deliveryZones.map((zone, index) => (
+                                        <div key={index} className="flex justify-between items-center bg-gray-700 p-3 rounded">
+                                            <div>
+                                                <h4 className="font-bold">{zone.name}</h4>
+                                                <p className="text-sm text-gray-300">Taxa: {zone.price}$00</p>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <button className="bg-yellow-500 px-2 py-1 rounded">Editar</button>
+                                                <button className="bg-red-500 px-2 py-1 rounded">Remover</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <button className="bg-green-500 px-4 py-2 rounded w-full">
+                                        + Adicionar Nova Zona
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    case "settings":
+                        return (
+                            <div>
+                                <h3 className="text-2xl mb-4">Configurações do Sistema</h3>
+                                <div className="space-y-4">
+                                    <div className="bg-gray-700 p-4 rounded">
+                                        <h4 className="font-bold mb-2">Alterar Senha de Administrador</h4>
+                                        <input 
+                                            type="password" 
+                                            placeholder="Nova Senha" 
+                                            className="w-full p-2 bg-gray-600 rounded mb-2"
+                                        />
+                                        <button className="bg-blue-500 px-4 py-2 rounded w-full">
+                                            Atualizar Senha
+                                        </button>
+                                    </div>
+
+                                    <div className="bg-gray-700 p-4 rounded">
+                                        <h4 className="font-bold mb-2">Configurações Gerais</h4>
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between items-center">
+                                                <span>Taxa de Serviço</span>
+                                                <input 
+                                                    type="number" 
+                                                    defaultValue="100" 
+                                                    className="w-20 p-1 bg-gray-600 rounded"
+                                                />
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span>Horário de Funcionamento</span>
+                                                <input 
+                                                    type="text" 
+                                                    defaultValue="18:00 - 23:00" 
+                                                    className="w-30 p-1 bg-gray-600 rounded"
+                                                />
+                                            </div>
+                                        </div>
+                                        <button className="bg-green-500 px-4 py-2 rounded w-full mt-4">
+                                            Salvar Configurações
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case "system":
+                        return (
+                            <div>
+                                <h3 className="text-2xl mb-4">Gestão do Sistema</h3>
+                                <div className="space-y-4">
+                                    <div className="bg-gray-700 p-4 rounded-lg">
+                                        <h4 className="text-xl font-bold mb-3">Configurações de Segurança</h4>
+                                        <div className="space-y-3">
+                                            <div>
+                                                <label className="block mb-2">Limite de Tentativas de Login</label>
+                                                <input 
+                                                    type="number" 
+                                                    defaultValue="5" 
+                                                    className="w-full p-2 bg-gray-600 rounded"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block mb-2">Tempo de Bloqueio (minutos)</label>
+                                                <input 
+                                                    type="number" 
+                                                    defaultValue="15" 
+                                                    className="w-full p-2 bg-gray-600 rounded"
+                                                />
+                                            </div>
+                                            <button className="bg-blue-500 w-full p-2 rounded mt-3 hover:bg-blue-600">
+                                                Atualizar Configurações de Segurança
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-gray-700 p-4 rounded-lg">
+                                        <h4 className="text-xl font-bold mb-3">Backup e Restauração</h4>
+                                        <div className="space-y-3">
+                                            <button className="bg-green-500 w-full p-2 rounded hover:bg-green-600">
+                                                Fazer Backup do Sistema
+                                            </button>
+                                            <div>
+                                                <label className="block mb-2">Restaurar a partir de Backup</label>
+                                                <input 
+                                                    type="file" 
+                                                    className="w-full p-2 bg-gray-600 rounded"
+                                                />
+                                                <button className="bg-yellow-500 w-full p-2 rounded mt-2 hover:bg-yellow-600">
+                                                    Restaurar Backup
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-gray-700 p-4 rounded-lg">
+                                        <h4 className="text-xl font-bold mb-3">Registro de Atividades</h4>
+                                        <div className="bg-gray-800 p-3 rounded max-h-60 overflow-y-auto">
+                                            <div className="mb-2 pb-2 border-b border-gray-600">
+                                                <p className="text-sm">10/01/2024 22:45 - Login Administrativo</p>
+                                            </div>
+                                            <div className="mb-2 pb-2 border-b border-gray-600">
+                                                <p className="text-sm">09/01/2024 18:30 - Atualização de Cardápio</p>
+                                            </div>
+                                            {/* More log entries can be added dynamically */}
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-gray-700 p-4 rounded-lg">
+                                        <h4 className="text-xl font-bold mb-3">Manutenção do Sistema</h4>
+                                        <div className="space-y-3">
+                                            <button className="bg-red-500 w-full p-2 rounded hover:bg-red-600">
+                                                Limpar Cache do Sistema
+                                            </button>
+                                            <button className="bg-purple-500 w-full p-2 rounded hover:bg-purple-600">
+                                                Reiniciar Serviços
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case "customers":
+                        return (
+                            <div>
+                                <h3 className="text-2xl mb-4">Perfil dos Clientes</h3>
+                                <div className="space-y-4">
+                                    {customerProfiles.map((customer, index) => (
+                                        <div key={index} className="bg-gray-700 p-4 rounded-lg">
+                                            <div className="flex justify-between items-center mb-3">
+                                                <h4 className="text-xl font-bold">{customer.name}</h4>
+                                                <div className="flex space-x-2">
+                                                    <button className="bg-yellow-500 px-2 py-1 rounded">Editar</button>
+                                                    <button className="bg-red-500 px-2 py-1 rounded">Remover</button>
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <div>
+                                                    <p><strong>Telefone:</strong> {customer.phone}</p>
+                                                    <p><strong>Email:</strong> {customer.email}</p>
+                                                    <p><strong>Endereço:</strong> {customer.address}</p>
+                                                </div>
+                                                <div>
+                                                    <p><strong>Total de Pedidos:</strong> {customer.totalOrders}</p>
+                                                    <p><strong>Último Pedido:</strong> {customer.lastOrder}</p>
+                                                    <p><strong>Preferências:</strong> {customer.preferences.join(", ")}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <button className="bg-green-500 px-4 py-2 rounded w-full">
+                                        + Adicionar Novo Cliente
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    default:
+                        return null;
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-[#1a1a1a] text-white p-4">
+                    {/* Admin Login Modal */}
+                    {isAdminLoginOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-gray-800 p-8 rounded-lg w-96">
+                                <h2 className="text-2xl mb-4 text-center">Login Administrativo</h2>
+                                <input 
+                                    type="password" 
+                                    value={adminPassword}
+                                    onChange={(e) => setAdminPassword(e.target.value)}
+                                    placeholder="Digite a senha"
+                                    className="w-full p-2 mb-4 bg-gray-700 rounded"
+                                />
+                                {adminError && (
+                                    <p className="text-red-500 mb-4 text-center">{adminError}</p>
+                                )}
+                                <div className="flex justify-between">
+                                    <button 
+                                        onClick={handleAdminLogin}
+                                        className="bg-green-600 px-4 py-2 rounded hover:bg-green-700"
+                                    >
+                                        Entrar
+                                    </button>
+                                    <button 
+                                        onClick={() => setIsAdminLoginOpen(false)}
+                                        className="bg-red-600 px-4 py-2 rounded hover:bg-red-700"
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Admin Panel Modal */}
+                    {isAdminPanelOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-gray-800 p-8 rounded-lg w-[600px] max-h-[80vh] overflow-y-auto">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h2 className="text-2xl">Painel Administrativo</h2>
+                                    <button 
+                                        onClick={() => setIsAdminPanelOpen(false)}
+                                        className="bg-red-600 px-3 py-1 rounded"
+                                    >
+                                        Fechar
+                                    </button>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center mb-4 flex-wrap">
+                                        <button 
+                                            onClick={() => setAdminActiveSection("pizzas")}
+                                            className={`px-4 py-2 rounded-full transition duration-300 ${adminActiveSection === "pizzas" ? "bg-red-600 scale-105 shadow-lg" : "bg-gray-700 hover:bg-gray-600"}`}
+                                        >
+                                            Gerenciar Cardápio de Pizzas
+                                        </button>
+                                        <button 
+                                            onClick={() => setAdminActiveSection("drinks")}
+                                            className={`px-4 py-2 rounded-full transition duration-300 ${adminActiveSection === "drinks" ? "bg-red-600 scale-105 shadow-lg" : "bg-gray-700 hover:bg-gray-600"}`}
+                                        >
+                                            Gerenciar Cardápio de Bebidas
+                                        </button>
+                                        <button 
+                                            onClick={() => setAdminActiveSection("zones")}
+                                            className={`px-4 py-2 rounded-full transition duration-300 ${adminActiveSection === "zones" ? "bg-red-600 scale-105 shadow-lg" : "bg-gray-700 hover:bg-gray-600"}`}
+                                        >
+                                            Gerenciar Zonas de Entrega
+                                        </button>
+                                        <button 
+                                            onClick={() => setAdminActiveSection("settings")}
+                                            className={`px-4 py-2 rounded-full transition duration-300 ${adminActiveSection === "settings" ? "bg-red-600 scale-105 shadow-lg" : "bg-gray-700 hover:bg-gray-600"}`}
+                                        >
+                                            Configurações do Sistema
+                                        </button>
+                                        <button 
+                                            onClick={() => setAdminActiveSection("system")}
+                                            className={`px-4 py-2 rounded-full transition duration-300 ${adminActiveSection === "system" ? "bg-red-600 scale-105 shadow-lg" : "bg-gray-700 hover:bg-gray-600"}`}
+                                        >
+                                            Gestão do Sistema
+                                        </button>
+                                        <button 
+                                            onClick={() => setAdminActiveSection("customers")}
+                                            className={`px-4 py-2 rounded-full transition duration-300 ${adminActiveSection === "customers" ? "bg-red-600 scale-105 shadow-lg" : "bg-gray-700 hover:bg-gray-600"}`}
+                                        >
+                                            Perfil de Clientes
+                                        </button>
+                                    </div>
+                                    {renderAdminSection()}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="max-w-4xl mx-auto relative">
+                        {/* Admin Login Button */}
+                        <button 
+                            onClick={() => setIsAdminLoginOpen(true)}
+                            className="absolute top-0 right-0 bg-gray-700 p-2 rounded-full hover:bg-gray-600 transition"
+                        >
+                            <i className="fas fa-lock"></i>
+                        </button>
+
+                        <div className="text-center mb-8">
+                            <h1 className="text-4xl md:text-6xl font-bold mb-4 font-crimson-text">
+                                KANTINHO DELÍCIA
+                            </h1>
+                            <div className="flex justify-center gap-4 mb-4">
+                                <div className="flex items-center gap-2">
+                                    <a 
+                                        href="https://www.instagram.com/kantinho_delicia/" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="hover:text-red-500 transition duration-300"
+                                    >
+                                        <i className="fab fa-instagram text-xl"></i>
+                                    </a>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <a 
+                                        href="https://www.facebook.com/profile.php?id=61555733836030" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="hover:text-blue-500 transition duration-300"
+                                    >
+                                        <i className="fab fa-facebook text-xl"></i>
+                                    </a>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <a 
+                                        href="https://www.youtube.com/watch?v=FgN67HjtpHM" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="hover:text-red-600 transition duration-300"
+                                    >
+                                        <i className="fab fa-youtube text-xl"></i>
+                                    </a>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <a 
+                                        href="https://www.tiktok.com/@kantinho.delicia" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="hover:text-black transition duration-300"
+                                    >
+                                        <i className="fab fa-tiktok text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="flex justify-center gap-4 text-sm">
+                                <span>FIXO: 2616090</span>
+                                <span>SWAG: 5999204</span>
+                                <span>PLAY: 9352262</span>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-center gap-4 mb-8">
+                            {["PIZZAS", "BEBIDAS", "ZONAS"].map((menu) => (
+                                <button
+                                    key={menu}
+                                    onClick={() => {
+                                        setSelectedMenu(menu);
+                                        if (menu === "PIZZAS") {
+                                            setSelectedSize("FAMILIAR");
+                                            setIsZonesOpen(false);
+                                        } else if (menu === "BEBIDAS") {
+                                            setSelectedSize("UN");
+                                            setIsZonesOpen(false);
+                                        } else if (menu === "ZONAS") {
+                                            setIsZonesOpen(true);
+                                        }
+                                    }}
+                                    className={`
+                                        px-4 py-2 rounded-full 
+                                        transition duration-300 ease-in-out
+                                        ${selectedMenu === menu 
+                                            ? "bg-red-600 scale-105 shadow-lg" 
+                                            : "bg-gray-700 hover:bg-gray-600"}
+                                    `}
+                                >
+                                    {menu}
+                                </button>
+                            ))}
+                        </div>
+
+                        {selectedMenu === "PIZZAS" && (
+                            <div className="flex justify-center gap-2 mb-8">
+                                {["FAMILIAR", "MEDIO", "PEQ"].map((size) => (
+                                    <button
+                                        key={size}
+                                        onClick={() => setSelectedSize(size)}
+                                        className={`
+                                            px-3 py-1 rounded-full text-sm
+                                            transition duration-300 ease-in-out
+                                            ${selectedSize === size 
+                                                ? "bg-red-600 scale-105 shadow-lg" 
+                                                : "bg-gray-700 hover:bg-gray-600"}
+                                        `}
+                                    >
+                                        {size}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {isZonesOpen ? (
+                            <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-2">
+                                {deliveryZones.map((zone, index) => (
+                                    <div 
+                                        key={index} 
+                                        className="bg-gray-800 p-3 rounded-lg flex justify-between items-center hover:bg-gray-700 transition duration-300"
+                                    >
+                                        <span>{zone.name}</span>
+                                        <span className="font-bold">{zone.price}$00</span>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="grid gap-4">
+                                {(selectedMenu === "PIZZAS" ? pizzaMenu : drinkMenu).map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="bg-gray-800 p-4 rounded-lg flex justify-between items-center hover:bg-gray-700 transition duration-300"
+                                    >
+                                        <div>
+                                            <h3 className="text-xl font-bold">{item.name}</h3>
+                                            <p className="text-gray-400 text-sm">{item.desc}</p>
+                                        </div>
+                                        <div className="text-xl font-bold">
+                                            {item.prices[selectedSize]
+                                                ? `${item.prices[selectedSize]}$00`
+                                                : "-"}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        <div className="mt-8 text-center text-sm text-gray-400">
+                            <p>
+                                {selectedMenu === "PIZZAS" 
+                                    ? "OBS: A ESSES VALORES SERÃO ACRECENTADOS 100$00 DE CAIXA MAIS TAXA DE ENTREGA (DEPENDE DA ZONA)"
+                                    : selectedMenu === "BEBIDAS"
+                                    ? "PREÇOS POR UNIDADE"
+                                    : "TAXAS DE ENTREGA POR ZONA"}
+                            </p>
+                            <div className="flex justify-center gap-4 mt-4">
+                                <i className="fab fa-cc-paypal text-2xl"></i>
+                                <i className="fab fa-cc-mastercard text-2xl"></i>
+                                <i className="fab fa-cc-visa text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<MainComponent />, document.getElementById('root'));
+    </script>
+</body>
+</html>
